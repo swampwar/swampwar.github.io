@@ -30,6 +30,7 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
         ExecutorService executorService = 
           new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS,   
           new LinkedBlockingQueue<Runnable>());
+        {% endhighlight %}
 
 2.  `Executors` 클래스에서 제공하는 Factory method를 사용 
 
