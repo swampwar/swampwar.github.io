@@ -1,10 +1,3 @@
----
-layout: post
-title: "SpringBoot"
-author: Yangs
-tags: [spring]
----
-
 # SpringBoot
 
 ## 프로젝트 구조
