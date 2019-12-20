@@ -25,7 +25,8 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
 
     `ExecutorService`는 인터페이스이기 때문에 구현체인 `ThreadPoolExecutor`를 new키워드로 초기화한다. (필요에 따라 다른 구현체를 초기화해도 된다.) 
     아래의 초기화 코드에서 10개의 core thread, 10개의 max thread, 0 밀리세크의 keepAliveTime, 작업 큐로LinkedBlockingQueue가 초기화되었다. Task(작업)을 위한 Queue에는 Runnable과 Callable 인터페이스를 구현한 클래스를 받을 수 있는데 return값이 있냐(Callable) 없냐(Runnable)에 따라 선택하면 된다.
-
+        
+        {% highlight java %}
         ExecutorService executorService = 
           new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS,   
           new LinkedBlockingQueue<Runnable>());
