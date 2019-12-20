@@ -26,24 +26,24 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
     `ExecutorService`는 인터페이스이기 때문에 구현체인 `ThreadPoolExecutor`를 new키워드로 초기화한다. (필요에 따라 다른 구현체를 초기화해도 된다.) 
     아래의 초기화 코드에서 10개의 core thread, 10개의 max thread, 0 밀리세크의 keepAliveTime, 작업 큐로LinkedBlockingQueue가 초기화되었다. Task(작업)을 위한 Queue에는 Runnable과 Callable 인터페이스를 구현한 클래스를 받을 수 있는데 return값이 있냐(Callable) 없냐(Runnable)에 따라 선택하면 된다.
         
-        {% highlight java %}
-        ExecutorService executorService = 
-          new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS,   
-          new LinkedBlockingQueue<Runnable>());
-        {% endhighlight %}
+{% highlight java %}
+ExecutorService executorService = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+{% endhighlight %}
 
 2.  `Executors` 클래스에서 제공하는 Factory method를 사용 
 
     제공되는 3가지의 factory method를 이용한 초기화이다. 메서드명에서 생성되는 ThreadPool의 성향을 유추할 수 있으며 실행하고자 하는 Task에 따라 선택하여 사용한다.
 
-        // 1. 10개 고정 사이즈의 ThreadPool 생성
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        
-        // 2. 1개 고정 사이즈의 ThreadPool 생성
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        
-        // 3. 유동적으로 증가하고 줄어드는 ThreadPool 생성
-        ExecutorService executorService = Executors.newCachedThreadPool();
+{% highlight java %}
+// 1. 10개 고정 사이즈의 ThreadPool 생성
+ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+// 2. 1개 고정 사이즈의 ThreadPool 생성
+ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+// 3. 유동적으로 증가하고 줄어드는 ThreadPool 생성
+ExecutorService executorService = Executors.newCachedThreadPool();
+{% endhighlight %}
 
 new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지만 `Executors`를 사용하는 것이 더 간편하다. 대부분의 경우 간편한 설정으로 원하는 작업이 가능하다.
 
@@ -51,43 +51,49 @@ new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지
 
 `ExecutorService`를 초기화 했다면 ThreadPool에 원하는 Task(작업)을 할당해야 한다. 일단 Task를 Callable / Runnable 인터페이스를 구현하여 생성하고, `ExecutorService`의 메서드를 호출하여 실행한다.
 
-    Runnable runnableTask = () -> {
-        try{
-            System.out.println(Thread.currentThread().getName() + " start");
-            TimeUnit.MILLISECONDS.sleep(500);
-            System.out.println(Thread.currentThread().getName() + " end");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    };
-    
-    Callable<String> callableTask = () -> {
-        TimeUnit.MILLISECONDS.sleep(5000);
-        return "Task's execution";
-    };
-    
-    List<Callable<String>> callableTasks = new ArrayList<>();
-    callableTasks.add(callableTask);
-    callableTasks.add(callableTask);
-    callableTasks.add(callableTask);
+{% highlight java %}
+Runnable runnableTask = () -> {
+    try{
+        System.out.println(Thread.currentThread().getName() + " start");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.println(Thread.currentThread().getName() + " end");
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+};
+
+Callable<String> callableTask = () -> {
+    TimeUnit.MILLISECONDS.sleep(5000);
+    return "Task's execution";
+};
+
+List<Callable<String>> callableTasks = new ArrayList<>();
+callableTasks.add(callableTask);
+callableTasks.add(callableTask);
+callableTasks.add(callableTask);
+{% endhighlight %}
 
 아래는 작업을 할당하기 위해서 제공되는 메서드들이다.
 
 1. execute() : 리턴타입이 void로 Task의 실행결과나 Task의 상태(실행중 or 실행완료)를 알 수 없다.
-
-        executorService.execute(runnableTask);
+{% highlight java %}
+executorService.execute(runnableTask);
+{% endhighlight %}
 
 2. submit() : Task를 할당하고 `Future` 타입의 결과값을 받는다. 결과가 리턴되어야 하므로 주로 Callable을 구현한 Task를 인자로 준다.
-
-        Future<String> future = executorService.submit(callableTask);
+{% highlight java %}
+Future<String> future = executorService.submit(callableTask);
+{% endhighlight %}
 
 3. invokeAny() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 실행에 성공한 Task 중 하나의 리턴값을 반환한다.
-
-        String result = executorService.invokeAny(callableTasks);
+{% highlight java %}
+String result = executorService.invokeAny(callableTasks);
+{% endhighlight %}
 
 4. invokeAll() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 모든 Task의 리턴값을 `List<Future<>>` 타입으로 반환한다.
-
-        List<Future<String>> futures = executorService.invokeAll(callableTasks);
+{% highlight java %}
+List<Future<String>> futures = executorService.invokeAll(callableTasks);
+{% endhighlight %}
 
 ## ExcecutorService 종료
 
@@ -100,34 +106,38 @@ new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지
     실행중인 Thread들을 즉시 종료시키려고 하지만, 모든 Thread가 동시에 종료되는 것을 보장하지는 않는다. 실행되지 않은 Task를 반환한다. 
 
 여기에 추가로 두 개의 shutdown 메서드가 결합된 `awaitTermination()`을 사용하는 것이 추천된다. 이 메서드는 먼저 새로운 Task가 실행되는 것을 막고, 일정 시간동안 실행중인 Task가 완료되기를 기다린다. 만일 일정 시간동안 처리되지 않은 Task에 대해서는 강제로 종료시킨다.
-
-    executorService.shutdown();
-    try {
-        if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
-            executorService.shutdownNow();
-        } 
-    } catch (InterruptedException e) {
+{% highlight java %}
+executorService.shutdown();
+try {
+    if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
         executorService.shutdownNow();
-    }
+    } 
+} catch (InterruptedException e) {
+    executorService.shutdownNow();
+}
+{% endhighlight %}
 
 ## Future 인터페이스
 
 `submit()`과 `invokeAll()` 메서드를 호출할때 반환하는 `Future` 객체로 Task의 결과값이나 상태(실행중 또는 실행완료)를 알 수 있다. 
 또한 `Future` 인터페이스는 Blocking method인 `get()`을 제공하는데 Task 실행 결과를 얻을 수 있다.(Runnable을 구현한 Task라면 null이 반환된다.) Blocking이기 때문에 실행중에 `get()`이 호출되는 경우 실행이 끝날 때까지 대기한다. 이는 성능저하를 불러올 수 있으므로 Timeout을 설정하여 일정 시간이 지나면 `TimeoutException`이 발생하도록 유도할 수 있다.
 
-    Future<String> future = executorService.submit(callableTask);
-    String result = null;
-    try {
-        result = future.get(); // Task가 실행중이면 여기서 대기한다.
-    } catch (InterruptedException | ExecutionException e) {
-        e.printStackTrace();
-    }
+{% highlight java %}
+Future<String> future = executorService.submit(callableTask);
+String result = null;
+try {
+    result = future.get(); // Task가 실행중이면 여기서 대기한다.
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}
 
-    // Timeout 설정, 지정된 시간이 지나면 TimeoutException이 발생한다.
-    String result = future.get(200, TimeUnit.MILLISECONDS); 
+// Timeout 설정, 지정된 시간이 지나면 TimeoutException이 발생한다.
+String result = future.get(200, TimeUnit.MILLISECONDS); 
+{% endhighlight %}
 
 이 밖에도 `isDone()`, `cancel()`, `isCancelled()` 메서드가 있다.
-
-    boolean isDone = future.isDone(); // Task가 실행되었는지?
-    boolean canceled = future.cancel(true); // Task를 취소
-    boolean isCancelled = future.isCancelled(); // Task가 취소되었는지?
+{% highlight java %}
+boolean isDone = future.isDone(); // Task가 실행되었는지?
+boolean canceled = future.cancel(true); // Task를 취소
+boolean isCancelled = future.isCancelled(); // Task가 취소되었는지?
+{% endhighlight %}
