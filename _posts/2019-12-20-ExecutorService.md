@@ -5,11 +5,9 @@ tags: [ExecutorService, Executors, Future]
 ---
 
 # ExecutorService
-
 Thread를 구현할 때 Runnable 인터페이스를 구현하거나 Thread 클래스를 상속하여 구현한다. 구현한 Thread를 `new MyThread().start()` 와 같이 호출하여 직접적으로 실행할 수도 있지만 기본 JDK의 `java.util.concurrent`패키지의 `ExcecutorService`를 이용하여 실행할 수도 있다.
 
 ## ExecutorService
-
 `ExecutorService`는 재사용이 가능한 ThreadPool로 `Executor` 인터페이스를 확장하여 Thread의 라이프사이클을 제어한다. 
 Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는 것은 간단하지 않다. Thread의 라이프사이클(생성과 제거 등)이나 발생할 수 있는 여러가지 low level의 고려사항들이 존재하는데 이를 개발자가 신경쓰지 않도록 편리하게 추상화한 것이 `ExecutorService`이다. 
 
@@ -18,7 +16,6 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
 ![ExecutorService_Queue]({{ "/assets/img/201912/ExecutorService.png" | relative_url }})
 
 ## ExecutorService 초기화
-
 `ExecutorService`를 초기화 하는 방법에는 2 가지 방법이 있다.
 
 1. 직접 new 키워드를 사용
@@ -48,7 +45,6 @@ ExecutorService executorService = Executors.newCachedThreadPool();
 new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지만 `Executors`를 사용하는 것이 더 간편하다. 대부분의 경우 간편한 설정으로 원하는 작업이 가능하다.
 
 ## ExecutorService Task 할당
-
 `ExecutorService`를 초기화 했다면 ThreadPool에 원하는 Task(작업)을 할당해야 한다. 일단 Task를 Callable / Runnable 인터페이스를 구현하여 생성하고, `ExecutorService`의 메서드를 호출하여 실행한다.
 
 {% highlight java %}
@@ -96,7 +92,6 @@ List<Future<String>> futures = executorService.invokeAll(callableTasks);
 {% endhighlight %}
 
 ## ExcecutorService 종료
-
 실행 명령한 Task가 모두 수행되어도 ExecutorService는 자동으로 종료되지 않는다. 앞으로 들어올 Task를 처리하기 위해 Thread는 wait 상태로 대기한다. 그러므로 종료를 위해서는 제공되는 shutdown() 이나 shutdownNow() API를 사용해야 한다.
 
 1. `executorService.shutdown()`
@@ -118,7 +113,6 @@ try {
 {% endhighlight %}
 
 ## Future 인터페이스
-
 `submit()`과 `invokeAll()` 메서드를 호출할때 반환하는 `Future` 객체로 Task의 결과값이나 상태(실행중 또는 실행완료)를 알 수 있다. 
 또한 `Future` 인터페이스는 Blocking method인 `get()`을 제공하는데 Task 실행 결과를 얻을 수 있다.(Runnable을 구현한 Task라면 null이 반환된다.) Blocking이기 때문에 실행중에 `get()`이 호출되는 경우 실행이 끝날 때까지 대기한다. 이는 성능저하를 불러올 수 있으므로 Timeout을 설정하여 일정 시간이 지나면 `TimeoutException`이 발생하도록 유도할 수 있다.
 
