@@ -18,31 +18,31 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
 ## ExecutorService 초기화
 `ExecutorService`를 초기화 하는 방법에는 2 가지 방법이 있다.
 
-1. 직접 new 키워드를 사용
+1.  직접 new 키워드를 사용
 
     `ExecutorService`는 인터페이스이기 때문에 구현체인 `ThreadPoolExecutor`를 new키워드로 초기화한다. (필요에 따라 다른 구현체를 초기화해도 된다.) 
     아래의 초기화 코드에서 10개의 core thread, 10개의 max thread, 0 밀리세크의 keepAliveTime, 작업 큐로LinkedBlockingQueue가 초기화되었다. Task(작업)을 위한 Queue에는 Runnable과 Callable 인터페이스를 구현한 클래스를 받을 수 있는데 return값이 있냐(Callable) 없냐(Runnable)에 따라 선택하면 된다.
         
-{% highlight java %}
-ExecutorService executorService = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
-{% endhighlight %}
+    {% highlight java %}
+    ExecutorService executorService = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+    {% endhighlight %}
 
 2.  `Executors` 클래스에서 제공하는 Factory method를 사용 
 
     제공되는 3가지의 factory method를 이용한 초기화이다. 메서드명에서 생성되는 ThreadPool의 성향을 유추할 수 있으며 실행하고자 하는 Task에 따라 선택하여 사용한다.
 
-{% highlight java %}
-// 1. 10개 고정 사이즈의 ThreadPool 생성
-ExecutorService executorService = Executors.newFixedThreadPool(10);
-
-// 2. 1개 고정 사이즈의 ThreadPool 생성
-ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-// 3. 유동적으로 증가하고 줄어드는 ThreadPool 생성
-ExecutorService executorService = Executors.newCachedThreadPool();
-{% endhighlight %}
-
-new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지만 `Executors`를 사용하는 것이 더 간편하다. 대부분의 경우 간편한 설정으로 원하는 작업이 가능하다.
+    {% highlight java %}
+    // 1. 10개 고정 사이즈의 ThreadPool 생성
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
+    
+    // 2. 1개 고정 사이즈의 ThreadPool 생성
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    
+    // 3. 유동적으로 증가하고 줄어드는 ThreadPool 생성
+    ExecutorService executorService = Executors.newCachedThreadPool();
+    {% endhighlight %}
+    
+    new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지만 `Executors`를 사용하는 것이 더 간편하다. 대부분의 경우 간편한 설정으로 원하는 작업이 가능하다.
 
 ## ExecutorService Task 할당
 `ExecutorService`를 초기화 했다면 ThreadPool에 원하는 Task(작업)을 할당해야 한다. 일단 Task를 Callable / Runnable 인터페이스를 구현하여 생성하고, `ExecutorService`의 메서드를 호출하여 실행한다.
@@ -71,46 +71,46 @@ callableTasks.add(callableTask);
 
 아래는 작업을 할당하기 위해서 제공되는 메서드들이다.
 
-1. execute() : 리턴타입이 void로 Task의 실행결과나 Task의 상태(실행중 or 실행완료)를 알 수 없다.
-{% highlight java %}
-executorService.execute(runnableTask);
-{% endhighlight %}
+1.  execute() : 리턴타입이 void로 Task의 실행결과나 Task의 상태(실행중 or 실행완료)를 알 수 없다.
+    {% highlight java %}
+    executorService.execute(runnableTask);
+    {% endhighlight %}
 
-2. submit() : Task를 할당하고 `Future` 타입의 결과값을 받는다. 결과가 리턴되어야 하므로 주로 Callable을 구현한 Task를 인자로 준다.
-{% highlight java %}
-Future<String> future = executorService.submit(callableTask);
-{% endhighlight %}
-
-3. invokeAny() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 실행에 성공한 Task 중 하나의 리턴값을 반환한다.
-{% highlight java %}
-String result = executorService.invokeAny(callableTasks);
-{% endhighlight %}
-
-4. invokeAll() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 모든 Task의 리턴값을 `List<Future<>>` 타입으로 반환한다.
-{% highlight java %}
-List<Future<String>> futures = executorService.invokeAll(callableTasks);
-{% endhighlight %}
-
+2.  submit() : Task를 할당하고 `Future` 타입의 결과값을 받는다. 결과가 리턴되어야 하므로 주로 Callable을 구현한 Task를 인자로 준다.
+    {% highlight java %}
+    Future<String> future = executorService.submit(callableTask);
+    {% endhighlight %}
+    
+3.  invokeAny() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 실행에 성공한 Task 중 하나의 리턴값을 반환한다.
+    {% highlight java %}
+    String result = executorService.invokeAny(callableTasks);
+    {% endhighlight %}
+    
+4.  invokeAll() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 모든 Task의 리턴값을 `List<Future<>>` 타입으로 반환한다.
+    {% highlight java %}
+    List<Future<String>> futures = executorService.invokeAll(callableTasks);
+    {% endhighlight %}
+    
 ## ExcecutorService 종료
 실행 명령한 Task가 모두 수행되어도 ExecutorService는 자동으로 종료되지 않는다. 앞으로 들어올 Task를 처리하기 위해 Thread는 wait 상태로 대기한다. 그러므로 종료를 위해서는 제공되는 shutdown() 이나 shutdownNow() API를 사용해야 한다.
 
-1. `executorService.shutdown()`
-실행중인 모든 Task가 수행되면 종료한다.
-2. `List<Runnable> notExecutedTasks = executorService.shutDownNow()`
-
+1.  `executorService.shutdown()`
+    실행중인 모든 Task가 수행되면 종료한다.
+2.  `List<Runnable> notExecutedTasks = executorService.shutDownNow()`
+    
     실행중인 Thread들을 즉시 종료시키려고 하지만, 모든 Thread가 동시에 종료되는 것을 보장하지는 않는다. 실행되지 않은 Task를 반환한다. 
 
-여기에 추가로 두 개의 shutdown 메서드가 결합된 `awaitTermination()`을 사용하는 것이 추천된다. 이 메서드는 먼저 새로운 Task가 실행되는 것을 막고, 일정 시간동안 실행중인 Task가 완료되기를 기다린다. 만일 일정 시간동안 처리되지 않은 Task에 대해서는 강제로 종료시킨다.
-{% highlight java %}
-executorService.shutdown();
-try {
-    if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+    여기에 추가로 두 개의 shutdown 메서드가 결합된 `awaitTermination()`을 사용하는 것이 추천된다. 이 메서드는 먼저 새로운 Task가 실행되는 것을 막고, 일정 시간동안 실행중인 Task가 완료되기를 기다린다. 만일 일정 시간동안 처리되지 않은 Task에 대해서는 강제로 종료시킨다.
+    {% highlight java %}
+    executorService.shutdown();
+    try {
+        if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+            executorService.shutdownNow();
+        } 
+    } catch (InterruptedException e) {
         executorService.shutdownNow();
-    } 
-} catch (InterruptedException e) {
-    executorService.shutdownNow();
-}
-{% endhighlight %}
+    }
+    {% endhighlight %}
 
 ## Future 인터페이스
 `submit()`과 `invokeAll()` 메서드를 호출할때 반환하는 `Future` 객체로 Task의 결과값이나 상태(실행중 또는 실행완료)를 알 수 있다. 
