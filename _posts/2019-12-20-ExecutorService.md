@@ -75,7 +75,7 @@ callableTasks.add(callableTask);
     {% highlight java %}
     executorService.execute(runnableTask);
     {% endhighlight %}
-
+    
 2.  submit() : Task를 할당하고 `Future` 타입의 결과값을 받는다. 결과가 리턴되어야 하므로 주로 Callable을 구현한 Task를 인자로 준다.
     {% highlight java %}
     Future<String> future = executorService.submit(callableTask);
