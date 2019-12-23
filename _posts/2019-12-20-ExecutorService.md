@@ -18,31 +18,31 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
 ## ExecutorService 초기화
 `ExecutorService`를 초기화 하는 방법에는 2 가지 방법이 있다.
 
-1.  직접 new 키워드를 사용
-    
-    `ExecutorService`는 인터페이스이기 때문에 구현체인 `ThreadPoolExecutor`를 new키워드로 초기화한다. (필요에 따라 다른 구현체를 초기화해도 된다.) 
-    아래의 초기화 코드에서 10개의 core thread, 10개의 max thread, 0 밀리세크의 keepAliveTime, 작업 큐로LinkedBlockingQueue가 초기화되었다. Task(작업)을 위한 Queue에는 Runnable과 Callable 인터페이스를 구현한 클래스를 받을 수 있는데 return값이 있냐(Callable) 없냐(Runnable)에 따라 선택하면 된다.
-        
-    {% highlight java %}
-    ExecutorService executorService = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
-    {% endhighlight %}
-    
-2.  `Executors` 클래스에서 제공하는 Factory method를 사용 
-    
-    제공되는 3가지의 factory method를 이용한 초기화이다. 메서드명에서 생성되는 ThreadPool의 성향을 유추할 수 있으며 실행하고자 하는 Task에 따라 선택하여 사용한다.
-    
-    {% highlight java %}
-    // 1. 10개 고정 사이즈의 ThreadPool 생성
-    ExecutorService executorService = Executors.newFixedThreadPool(10);
-    
-    // 2. 1개 고정 사이즈의 ThreadPool 생성
-    ExecutorService executorService = Executors.newSingleThreadExecutor();
-    
-    // 3. 유동적으로 증가하고 줄어드는 ThreadPool 생성
-    ExecutorService executorService = Executors.newCachedThreadPool();
-    {% endhighlight %}
-    
-    new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지만 `Executors`를 사용하는 것이 더 간편하다. 대부분의 경우 간편한 설정으로 원하는 작업이 가능하다.
+1. 직접 new 키워드를 사용
+   
+   `ExecutorService`는 인터페이스이기 때문에 구현체인 `ThreadPoolExecutor`를 new키워드로 초기화한다. (필요에 따라 다른 구현체를 초기화해도 된다.) 
+   아래의 초기화 코드에서 10개의 core thread, 10개의 max thread, 0 밀리세크의 keepAliveTime, 작업 큐로LinkedBlockingQueue가 초기화되었다. Task(작업)을 위한 Queue에는 Runnable과 Callable 인터페이스를 구현한 클래스를 받을 수 있는데 return값이 있냐(Callable) 없냐(Runnable)에 따라 선택하면 된다.
+   
+   {% highlight java %}
+   ExecutorService executorService = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+   {% endhighlight %}
+   
+2. `Executors` 클래스에서 제공하는 Factory method를 사용 
+   
+   제공되는 3가지의 factory method를 이용한 초기화이다. 메서드명에서 생성되는 ThreadPool의 성향을 유추할 수 있으며 실행하고자 하는 Task에 따라 선택하여 사용한다.
+   
+   {% highlight java %}
+   // 1. 10개 고정 사이즈의 ThreadPool 생성
+   ExecutorService executorService = Executors.newFixedThreadPool(10);
+   
+   // 2. 1개 고정 사이즈의 ThreadPool 생성
+   ExecutorService executorService = Executors.newSingleThreadExecutor();
+   
+   // 3. 유동적으로 증가하고 줄어드는 ThreadPool 생성
+   ExecutorService executorService = Executors.newCachedThreadPool();
+   {% endhighlight %}
+   
+   new 키워드를 사용하는 것이 좀 더 세부적인 설정이 가능하지만 `Executors`를 사용하는 것이 더 간편하다. 대부분의 경우 간편한 설정으로 원하는 작업이 가능하다.
 
 ## ExecutorService Task 할당
 `ExecutorService`를 초기화 했다면 ThreadPool에 원하는 Task(작업)을 할당해야 한다. 일단 Task를 Callable / Runnable 인터페이스를 구현하여 생성하고, `ExecutorService`의 메서드를 호출하여 실행한다.
