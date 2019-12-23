@@ -17,7 +17,7 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
 
 ## ExecutorService 초기화
 `ExecutorService`를 초기화 하는 방법에는 2 가지 방법이 있다.
-1. 직접 new 키워드를 사용
+* 직접 new 키워드를 사용
    `ExecutorService`는 인터페이스이기 때문에 구현체인 `ThreadPoolExecutor`를 new키워드로 초기화한다. (필요에 따라 다른 구현체를 초기화해도 된다.) 
    아래의 초기화 코드에서 10개의 core thread, 10개의 max thread, 0 밀리세크의 keepAliveTime, 작업 큐로LinkedBlockingQueue가 초기화되었다. Task(작업)을 위한 Queue에는 Runnable과 Callable 인터페이스를 구현한 클래스를 받을 수 있는데 return값이 있냐(Callable) 없냐(Runnable)에 따라 선택하면 된다.
    
@@ -25,7 +25,7 @@ Thread를 활용하여 다수의 작업(Task)들을 비동기로 수행한다는
    ExecutorService executorService = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
    {% endhighlight %}
 
-2. `Executors` 클래스에서 제공하는 Factory method를 사용 
+* `Executors` 클래스에서 제공하는 Factory method를 사용 
    제공되는 3가지의 factory method를 이용한 초기화이다. 메서드명에서 생성되는 ThreadPool의 성향을 유추할 수 있으며 실행하고자 하는 Task에 따라 선택하여 사용한다.
    
    {% highlight java %}
@@ -68,22 +68,22 @@ callableTasks.add(callableTask);
 
 아래는 작업을 할당하기 위해서 제공되는 메서드들이다.
 
-1.  execute() : 리턴타입이 void로 Task의 실행결과나 Task의 상태(실행중 or 실행완료)를 알 수 없다.
+*  execute() : 리턴타입이 void로 Task의 실행결과나 Task의 상태(실행중 or 실행완료)를 알 수 없다.
     {% highlight java %}
     executorService.execute(runnableTask);
     {% endhighlight %}
     
-2.  submit() : Task를 할당하고 `Future` 타입의 결과값을 받는다. 결과가 리턴되어야 하므로 주로 Callable을 구현한 Task를 인자로 준다.
+*  submit() : Task를 할당하고 `Future` 타입의 결과값을 받는다. 결과가 리턴되어야 하므로 주로 Callable을 구현한 Task를 인자로 준다.
     {% highlight java %}
     Future<String> future = executorService.submit(callableTask);
     {% endhighlight %}
     
-3.  invokeAny() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 실행에 성공한 Task 중 하나의 리턴값을 반환한다.
+*  invokeAny() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 실행에 성공한 Task 중 하나의 리턴값을 반환한다.
     {% highlight java %}
     String result = executorService.invokeAny(callableTasks);
     {% endhighlight %}
     
-4.  invokeAll() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 모든 Task의 리턴값을 `List<Future<>>` 타입으로 반환한다.
+*  invokeAll() : Task를 Collection에 넣어서 인자로 넘겨줄 수 있다. 모든 Task의 리턴값을 `List<Future<>>` 타입으로 반환한다.
     {% highlight java %}
     List<Future<String>> futures = executorService.invokeAll(callableTasks);
     {% endhighlight %}
