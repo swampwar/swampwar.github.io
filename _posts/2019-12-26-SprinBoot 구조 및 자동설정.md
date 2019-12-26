@@ -19,12 +19,12 @@ public @interface SpringBootApplication {
 - SpringBoot의 Bean등록은 두 단계로 나눠서 읽히게 된다.
     - 1단계 @ComponentScan : 개발자가 지정한 클래스를 빈으로 등록
     - 2단계 @EnableAutoConfiguration : 기타 라이브러리의 클래스를 빈으로 등록
-    
+
 
 - @ComponentScan : 해당 자바파일의 패키지를 기본패키지로 하위 패키지의 컴포넌트들을 모두 빈으로 등록한다. 개발자가 빈등록을 위해 애노테이션을 마킹한 클래스들이 빈으로 등록된다. 마킹에 사용되는 주요 애노테이션은 아래와 같다.
     - @Component
     - @Configuration, @Repository, @Service, @Controller, @RestController
-    
+
 
 - @EnableAutoConfiguration : @ComponentScan이 동작한 이후 자동설정이 동작한다.
     - spring.factories : @EnableAutoConfiguration 자동설정의 주요설정파일으로 모두 `spring-boot-autoconfigure` 라이브러리에 포함되어 있다.
@@ -48,13 +48,16 @@ public @interface SpringBootApplication {
 
 mybatis starter 라이브러리를 기준으로 포스팅 할 예정이며 다른 라이브러리도 비슷하다.
 
+
 - `mybatis-spring-boot-starter` 
+
 스프링부트 프로젝트의 pom.xml에 추가한 `mybatis-spring-boot-starter` 자체에는 많은 파일이 있지는 않다. META-INF 폴더에 pom.xml과 pom.properties 파일만 있는 정도이다.
 아래는 `mybatis-spring-boot-starter` 의 파일구성과 pom.xml 이다. starter의 pom.xml에는 사용될 다른 라이브러리와 autoconfigure(`mybatis-spring-boot-autoconfigure`) 라이브러리가 포함되어 있는 것을 볼 수 있다.
 
 ![mybatis-spring-boot-starter 구성]({{ "/assets/img/201912/SpringBoot_img1.png" | relative_url }})
 {% highlight xml %}
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.mybatis.spring.boot</groupId>
@@ -92,6 +95,7 @@ mybatis starter 라이브러리를 기준으로 포스팅 할 예정이며 다�
 {% endhighlight %}
 
 - `Xxx-spring-boot-autoconfigure`
+
 starter 라이브러리에서 참조되는 autoconfigure 라이브러리는 자동설정 클래스가 포함된다.(`spring.factories` 및 `Xxx-AutoConfiguration.class` 포함)
 스프링부트 프로젝트 기동시 메인 클래스의 @EnableAutoConfiguration 애노테이션이 `spring.factories` 파일을 읽어들여 자동설정을 진행한다.
 
@@ -99,37 +103,38 @@ starter 라이브러리에서 참조되는 autoconfigure 라이브러리는 자�
 
 자동설정 중에는 스프링부트 프로젝트의 `application.properties`나 `application.yml` 같은 프로퍼티 설정파일에서 지정한 프로퍼티값을 읽어들여 활용할 수 있다. 이는 autoconfigure내의 아래 클래스들이 동작한 결과이다.
 
-    - `XxxProperties.java(MybatisProperties.java)`
-    자동설정시 참조할 프로퍼티에 대해 사전에 정의해 놓은 클래스이다. 사용법은 아래와 같다. 
-    1. `XxxProperties.java(MybatisProperties.java)`에 `@ConfigurationProperties`을 마킹하면,
-    프로퍼티 설정파일에서 mybatis를 prefix로 하는 프로퍼티 값들을 읽어들여 변수에 바인딩된다.
-        
-        {% highlight java %}    
-        @ConfigurationProperties(prefix = MybatisProperties.MYBATIS_PREFIX)
-        public class MybatisProperties {
-            public static final String MYBATIS_PREFIX = "mybatis";
-        	
-            /**
-              * Location of MyBatis xml config file.
-              */
-            private String configLocation; // 프로퍼티 설정파일에서 값을 읽어들여 바인딩된다.
-            ...
-        }
-        {% endhighlight %}
+- `XxxProperties.java(MybatisProperties.java)`
 
-    2. AutoConfiguration 자동설정 클래스에서 @EnableConfigurationProperties(MybatisProperties.class) 애노테이션을 마킹하여 바인딩된 변수(프로퍼티 설정파일의 값)를 이용하여 자동설정 한다.
-        {% highlight java %}
-        @org.springframework.context.annotation.Configuration
-        @ConditionalOnClass({ SqlSessionFactory.class, SqlSessionFactoryBean.class })
-        @ConditionalOnSingleCandidate(DataSource.class)
-        @EnableConfigurationProperties(MybatisProperties.class)
-        @AutoConfigureAfter({ DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class })
-        public class MybatisAutoConfiguration implements InitializingBean {
-          private static final Logger logger = LoggerFactory.getLogger(MybatisAutoConfiguration.class);
-          private final MybatisProperties properties; // 바인딩된 properties
-            ...
-        }
-        {% endhighlight %}
+자동설정시 참조할 프로퍼티에 대해 사전에 정의해 놓은 클래스이다. 사용법은 아래와 같다. 
+    
+1. `XxxProperties.java(MybatisProperties.java)`에 `@ConfigurationProperties`을 마킹하면, 프로퍼티 설정파일에서 mybatis를 prefix로 하는 프로퍼티 값들을 읽어들여 변수에 바인딩된다.
+    
+{% highlight java %}
+@ConfigurationProperties(prefix = MybatisProperties.MYBATIS_PREFIX)
+public class MybatisProperties {
+    public static final String MYBATIS_PREFIX = "mybatis";
+    
+    /**
+      * Location of MyBatis xml config file.
+      */
+    private String configLocation; // 프로퍼티 설정파일에서 값을 읽어들여 바인딩된다.
+    ...
+}
+{% endhighlight %}
+
+2. AutoConfiguration 자동설정 클래스에서 @EnableConfigurationProperties(MybatisProperties.class) 애노테이션을 마킹하여 바인딩된 변수(프로퍼티 설정파일의 값)를 이용하여 자동설정 한다.
+{% highlight java %}
+@org.springframework.context.annotation.Configuration
+@ConditionalOnClass({ SqlSessionFactory.class, SqlSessionFactoryBean.class })
+@ConditionalOnSingleCandidate(DataSource.class)
+@EnableConfigurationProperties(MybatisProperties.class)
+@AutoConfigureAfter({ DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class })
+public class MybatisAutoConfiguration implements InitializingBean {
+  private static final Logger logger = LoggerFactory.getLogger(MybatisAutoConfiguration.class);
+  private final MybatisProperties properties; // 바인딩된 properties
+    ...
+}
+{% endhighlight %}
 
 요약하면, 
 스프링부트에서 의존성을 추가하고 싶다면 제공되는 stater가 있는지 알아본다.
