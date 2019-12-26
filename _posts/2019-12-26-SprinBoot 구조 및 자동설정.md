@@ -103,36 +103,36 @@ starter 라이브러리에서 참조되는 autoconfigure 라이브러리는 자�
 자동설정 중에는 스프링부트 프로젝트의 `application.properties`나 `application.yml` 같은 프로퍼티 설정파일에서 지정한 프로퍼티값을 읽어들여 활용할 수 있다. 이는 autoconfigure내의 아래 클래스들이 동작한 결과이다.
 
 - `XxxProperties.java(MybatisProperties.java)`  
-자동설정시 참조할 프로퍼티에 대해 사전에 정의해 놓은 클래스이다. 사용법은 아래와 같다. 
+자동설정시 참조할 프로퍼티에 대해 사전에 정의해 놓은 클래스로 사용법은 아래와 같다. 
 
     - `XxxProperties.java(MybatisProperties.java)`에 `@ConfigurationProperties`을 마킹하면,  
-    프로퍼티 설정파일에서 mybatis를 prefix로 하는 프로퍼티 값들을 읽어들여 변수에 바인딩된다.
-    {% highlight java %}
-    @ConfigurationProperties(prefix = MybatisProperties.MYBATIS_PREFIX)
-    public class MybatisProperties {
-        public static final String MYBATIS_PREFIX = "mybatis";
-        
-        /**
-          * Location of MyBatis xml config file.
-          */
-        private String configLocation; // 프로퍼티 설정파일에서 값을 읽어들여 바인딩된다.
-        ...
-    }
-    {% endhighlight %}
+      프로퍼티 설정파일에서 mybatis를 prefix로 하는 프로퍼티 값들을 읽어들여 변수에 바인딩된다.
+      {% highlight java %}
+      @ConfigurationProperties(prefix = MybatisProperties.MYBATIS_PREFIX)
+      public class MybatisProperties {
+          public static final String MYBATIS_PREFIX = "mybatis";
+          
+          /**
+            * Location of MyBatis xml config file.
+            */
+          private String configLocation; // 프로퍼티 설정파일에서 값을 읽어들여 바인딩된다.
+          ...
+      }
+      {% endhighlight %}
 
     - AutoConfiguration 자동설정 클래스에서 @EnableConfigurationProperties(MybatisProperties.class) 애노테이션을 마킹하여 바인딩된 변수(프로퍼티 설정파일의 값)를 이용하여 자동설정 한다.
-    {% highlight java %}
-    @org.springframework.context.annotation.Configuration
-    @ConditionalOnClass({ SqlSessionFactory.class, SqlSessionFactoryBean.class })
-    @ConditionalOnSingleCandidate(DataSource.class)
-    @EnableConfigurationProperties(MybatisProperties.class)
-    @AutoConfigureAfter({ DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class })
-    public class MybatisAutoConfiguration implements InitializingBean {
-      private static final Logger logger = LoggerFactory.getLogger(MybatisAutoConfiguration.class);
-      private final MybatisProperties properties; // 바인딩된 properties
+      {% highlight java %}
+      @org.springframework.context.annotation.Configuration
+      @ConditionalOnClass({ SqlSessionFactory.class, SqlSessionFactoryBean.class })
+      @ConditionalOnSingleCandidate(DataSource.class)
+      @EnableConfigurationProperties(MybatisProperties.class)
+      @AutoConfigureAfter({ DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class })
+      public class MybatisAutoConfiguration implements InitializingBean {
+        private static final Logger logger = LoggerFactory.getLogger(MybatisAutoConfiguration.class);
+        private final MybatisProperties properties; // 바인딩된 properties
         ...
-    }
-    {% endhighlight %}
+      }
+      {% endhighlight %}
 
 요약하면, 
 스프링부트에서 의존성을 추가하고 싶다면 제공되는 stater가 있는지 알아본다.  
