@@ -18,11 +18,11 @@ public @interface SpringBootApplication {
 - SpringBoot의 Bean등록은 두 단계로 나눠서 읽히게 된다.
     - 1단계 @ComponentScan : 개발자가 지정한 클래스를 빈으로 등록
     - 2단계 @EnableAutoConfiguration : 기타 라이브러리의 클래스를 빈으로 등록
-      
+
 - @ComponentScan : 해당 자바파일의 패키지를 기본패키지로 하위 패키지의 컴포넌트들을 모두 빈으로 등록한다. 개발자가 빈등록을 위해 애노테이션을 마킹한 클래스들이 빈으로 등록된다. 마킹에 사용되는 주요 애노테이션은 아래와 같다.
     - @Component
     - @Configuration, @Repository, @Service, @Controller, @RestController
-      
+
 - @EnableAutoConfiguration : @ComponentScan이 동작한 이후 자동설정이 동작한다.
     - spring.factories : @EnableAutoConfiguration 자동설정의 주요설정파일으로 모두 `spring-boot-autoconfigure` 라이브러리에 포함되어 있다.
         - 스프링부트 `spring-boot-autoconfigurer` 라이브러리의 META-INF 폴더 이하에 있는 파일이다.
@@ -47,7 +47,7 @@ starter 라이브러리는 단순히 의존성만 추가되는 것이 아니라 
 
 mybatis starter 라이브러리를 기준으로 포스팅 할 예정이며 다른 라이브러리도 비슷하다.  
 
-- `mybatis-spring-boot-starter` 
+- `mybatis-spring-boot-starter`  
 스프링부트 프로젝트의 pom.xml에 추가한 `mybatis-spring-boot-starter` 자체에는 많은 파일이 있지는 않다.  
 META-INF 폴더에 pom.xml과 pom.properties 파일만 있는 정도이다.  
 아래는 `mybatis-spring-boot-starter` 의 파일구성과 pom.xml 이다. starter의 pom.xml에는 사용될 다른 라이브러리와 autoconfigure(`mybatis-spring-boot-autoconfigure`) 라이브러리가 포함되어 있는 것을 볼 수 있다.
