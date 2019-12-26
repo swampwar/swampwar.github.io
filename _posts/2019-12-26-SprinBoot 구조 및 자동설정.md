@@ -3,7 +3,8 @@
 ## 프로젝트 구조
 - 스프링부트에는 main메서드를 포함하는 시작 클래스가 있고, 이 클래스에는 `@SpringBootApplication`가 마킹되어 있다.
 `@SpringBootApplication`는 다수의 애노테이션으로 이루어진 메타애노테이션으로 애노테이션들이 실행되어 빈 등록 및 자동설정을 수행하며, 주요 기능을 수행하는 애노테이션은 3가지다.
-@SpringBootApplication = @SpringBootConfiguration + @EnableAutoConfiguration + @ComponentScan
+    
+    @SpringBootApplication = @SpringBootConfiguration + @EnableAutoConfiguration + @ComponentScan
 
 {% highlight java %}
 @SpringBootConfiguration
@@ -12,17 +13,19 @@
         @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
 public @interface SpringBootApplication {
 ...
-{}
+}
 {% endhighlight %}
 
 - SpringBoot의 Bean등록은 두 단계로 나눠서 읽히게 된다.
     - 1단계 @ComponentScan : 개발자가 지정한 클래스를 빈으로 등록
     - 2단계 @EnableAutoConfiguration : 기타 라이브러리의 클래스를 빈으로 등록
     
+
 - @ComponentScan : 해당 자바파일의 패키지를 기본패키지로 하위 패키지의 컴포넌트들을 모두 빈으로 등록한다. 개발자가 빈등록을 위해 애노테이션을 마킹한 클래스들이 빈으로 등록된다. 마킹에 사용되는 주요 애노테이션은 아래와 같다.
     - @Component
     - @Configuration, @Repository, @Service, @Controller, @RestController
     
+
 - @EnableAutoConfiguration : @ComponentScan이 동작한 이후 자동설정이 동작한다.
     - spring.factories : @EnableAutoConfiguration 자동설정의 주요설정파일으로 모두 `spring-boot-autoconfigure` 라이브러리에 포함되어 있다.
         - 스프링부트 `spring-boot-autoconfigurer` 라이브러리의 META-INF 폴더 이하에 있는 파일이다.
