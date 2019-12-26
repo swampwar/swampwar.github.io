@@ -129,8 +129,10 @@ starter 라이브러리에서 참조되는 autoconfigure 라이브러리는 자�
             // 생략
         }
         ```
-
+---
 요약하면, 
+스프링부트는 `@SpringBootApplication` 애노테이션에서 빈 등록 및 자동설정이 시작된다.  
+빈 등록은 개발자가 애노테이션을 마킹한 클래스 및 추가한 의존성의 클래스들이 대상으로 2단계에 걸쳐 등록된다.  
 스프링부트에서 의존성을 추가하고 싶다면 제공되는 stater가 있는지 알아본다.  
-starter는 단순히 라이브러리를 추가하는 것에 더해서  autoconfigure 라이브러리를 참조한다.  
-autoconfigure는 미리 정의된 자동설정을 진행하며, 이 때 스트링부트 프로젝트의 application.properties 같은 프로퍼티 설정파일에서 값을 읽어들여 자동설정에 사용한다. 
+starter는 단순히 라이브러리를 추가하는 것에 더해서 autoconfigure 라이브러리를 참조한다.  
+autoconfigure의 `spring.factories`에 정의된 자동설정 클래스들이 실행되고 스트링부트 프로젝트의 `application.properties` 같은 프로퍼티 설정파일에서 값을 읽어들여 자동설정에 사용한다. 
