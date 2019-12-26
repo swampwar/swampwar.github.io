@@ -123,7 +123,7 @@ starter 라이브러리에서 참조되는 autoconfigure 라이브러리는 자�
         @ConditionalOnSingleCandidate(DataSource.class)
         @EnableConfigurationProperties(MybatisProperties.class)
         @AutoConfigureAfter({ DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class })
-            public class MybatisAutoConfiguration implements InitializingBean {
+        public class MybatisAutoConfiguration implements InitializingBean {
             private static final Logger logger = LoggerFactory.getLogger(MybatisAutoConfiguration.class);
             private final MybatisProperties properties; // 바인딩된 properties
             // 생략
