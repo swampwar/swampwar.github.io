@@ -95,7 +95,7 @@ META-INF 폴더에 pom.xml과 pom.properties 파일만 있는 정도이다.
 - `Xxx-spring-boot-autoconfigure`
 
 starter 라이브러리에서 참조되는 autoconfigure 라이브러리는 자동설정 클래스가 포함된다.  
-(`spring.factories` 및 `Xxx-AutoConfiguration.class` 포함)  
+(`spring.factories` 및 `XxxAutoConfiguration.class` 포함)  
 스프링부트 프로젝트 기동시 메인 클래스의 `@EnableAutoConfiguration` 애노테이션이 `spring.factories` 파일을 읽어들여 자동설정을 진행한다.
 
 ![mybatis-spring-boot-autoconfigure 구성]({{ "/assets/img/201912/SpringBoot_img2.png" | relative_url }})
@@ -111,10 +111,6 @@ starter 라이브러리에서 참조되는 autoconfigure 라이브러리는 자�
       @ConfigurationProperties(prefix = MybatisProperties.MYBATIS_PREFIX)
       public class MybatisProperties {
           public static final String MYBATIS_PREFIX = "mybatis";
-          
-          /**
-            * Location of MyBatis xml config file.
-            */
           private String configLocation; // 프로퍼티 설정파일에서 값을 읽어들여 바인딩된다.
           ...
       }
