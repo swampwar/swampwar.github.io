@@ -1,5 +1,8 @@
-# SpringBoot 구조 및 자동설정
-
+---
+layout: post
+title: SpringBoot 구조 및 자동설정
+tags: [SpringBoot, @SpringBootApplication, @EnableAutoConfiguration, autoconfigurer, 자동설정]
+---
 ## 프로젝트 구조
 - 스프링부트에는 main메서드를 포함하는 시작 클래스가 있고, 이 클래스에는 `@SpringBootApplication`가 마킹되어 있다.
 `@SpringBootApplication`는 다수의 애노테이션으로 이루어진 메타애노테이션으로 애노테이션들이 실행되어 빈 등록 및 자동설정을 수행하며, 주요 기능을 수행하는 애노테이션은 3가지다.  
