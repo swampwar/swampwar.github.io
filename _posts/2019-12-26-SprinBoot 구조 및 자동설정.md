@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SpringBoot 구조 및 자동설정
-tags: [SpringBoot, @SpringBootApplication, @EnableAutoConfiguration, autoconfigurer, 자동설정]
+tags: [SpringBoot, SpringBootApplication, EnableAutoConfiguration, autoconfigurer, 자동설정]
 ---
 ## 프로젝트 구조
 - 스프링부트에는 main메서드를 포함하는 시작 클래스가 있고, 이 클래스에는 `@SpringBootApplication`가 마킹되어 있다.
