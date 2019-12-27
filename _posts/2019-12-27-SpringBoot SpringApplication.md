@@ -11,14 +11,14 @@ main() 메서드에서 시작되는 스프링 어플리케이션의 초기 설�
     
 ```java
 public static void main(String[] args) {
-    SpringApplication.run(MySpringConfiguration.class, args);
+    SpringApplication.run(MySpringConfiguration.class, args); // static 메서드로 기동
 }
 ```
 
 ```java
 public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(App.class);
-        app.run(args);
+    SpringApplication app = new SpringApplication(App.class); // 객체를 생성하여 기동
+    app.run(args);
 }
 ```
 
