@@ -25,19 +25,7 @@ class MyBean {
 프로퍼티 설정파일을 작성한다.  
 일반적으로 프로퍼티명은 `is-main-tester` 처럼 소문자와 대쉬(-)를 구분자로 하는 명칭이 권장된다.  
 프로퍼티명 앞의 대쉬(-)는 리스트형을 나타낼때 사용한다.
-```text
-test:
-  name: tester
-  cnt: 99
-  is-main-tester: true
-  sub-testers:
-    - name: sub-tester1
-      cnt: 11
-      is-main-tester: false
-    - name: sub-tester2
-      cnt: 22
-      is-main-tester: false
-```
+
 
 - @ConfigurationProperties(prefix = "test")  
 설정파일로 정의한 프로퍼티가 맵핑될 클래스를 작성하고 `@ConfigurationProperties`을 마킹한다. 이 클래스는 프로퍼티값이 맵핑될 클래스라는 의미로 애노테이션에는 프로퍼티명의 prefix를 지정할 수 있다.  
