@@ -102,7 +102,7 @@ public class PropertyRunner implements ApplicationRunner {
 ```
 ```text
 =================================
-TesterProperties : TesterProperties{name='tester', cnt=99, isMainTester=false, 
+TesterProperties : TesterProperties{name='tester', cnt=99, isMainTester=true, 
 subTesters=[SubTester{name='sub-tester1', cnt=11, isMainTester=false}, 
             SubTester{name='sub-tester2', cnt=22, isMainTester=false}]}
 =================================
