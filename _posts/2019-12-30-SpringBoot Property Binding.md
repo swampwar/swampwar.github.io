@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SpringBoot 외부설정
+title: SpringBoot Property Binding
 tags: [Java, Spring, SpringBoot, 외부설정, application.properties, application.yml, ConfigurationProperties, EnableConfigurationProperties, ConfigurationPropertiesScan]
 ---
 ## Property Binding
