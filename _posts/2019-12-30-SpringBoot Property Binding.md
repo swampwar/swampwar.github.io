@@ -127,15 +127,15 @@ public class TesterProperties {
     @Valid // 내부 프로퍼티에 검증이 적용되려면 @Valid를 마킹한다.
     private List<SubTester> subTesters = new ArrayList<>();
 
-        static class SubTester {
+    static class SubTester {
         @NotNull
         private String name;
         @Min(20)
         private int cnt;
         private boolean isMainTester;
-        }
-
-        // Getter, Setter, ToString 생략
+    }
+    
+    // Getter, Setter, ToString 생략
 }
 ```
 
