@@ -13,7 +13,7 @@ tags: [Java, Spring, SpringBoot, 외부설정, application.properties, applicati
 가장 빈번하게 사용하는 방식은 `@Value("${property}")` 방식일 듯 싶지만 불러올 프로퍼티의 갯수가 많거나, 계층형의 구조를 가지고 있는 경우 등에는 적절하지 않다. 또한 프로퍼티명이나 타입을 직접 입력해야 하므로 오류에 대한 여지도 있다.
 ```java
 class MyBean {
-        @Value("${myProp}")
+    @Value("${myProp}")
     private String myProp; // @Value에 정의된 프로퍼티가 바인딩된다.
 }
 ```
@@ -24,7 +24,8 @@ class MyBean {
 - application.yml  
 프로퍼티 설정파일을 작성한다.  
 일반적으로 프로퍼티명은 `is-main-tester` 처럼 소문자와 대쉬(-)를 구분자로 하는 명칭이 권장된다.  
-프로퍼티명 앞의 대쉬(-)는 리스트형을 나타낼때 사용한다.
+프로퍼티명 앞의 대쉬(-)는 리스트형을 나타낼때 사용한다.  
+
 ```yaml
 test:
   name: tester
@@ -45,6 +46,7 @@ test:
 작성된 위의 프로퍼티 파일은 kebab case(`-` 가 구분자)로 작성하였으나 클래스 변수명은 camel case이다.  
 스프링부트에서는 프로퍼티명의 camel case, kebab case, underscore notation 간의 변환을 모두 지원한다.  
 subTesters - sub-testers  - sub_testers
+
 ```java
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -60,15 +62,15 @@ public class TesterProperties {
     private boolean isMainTester;
     private List<SubTester> subTesters = new ArrayList<>();
 
-      // Getter, Setter, ToString 생략
+    // Getter, Setter, ToString 생략
     
-        static class SubTester {
+    static class SubTester {
         private String name;
         private int cnt;
         private boolean isMainTester;
             
-                // Getter, Setter, ToString 생략
-        }
+        // Getter, Setter, ToString 생략
+    }
 }
 ```
 
@@ -77,6 +79,7 @@ public class TesterProperties {
 주로 프로퍼티 값을 사용할 `@Configuration` 파일에 마킹하며, `@ConfigurationProperties`가 마킹된 클래스를 빈으로 등록해주는 역할이다.  
 만일 프로퍼티 클래스가 다수라면 `@ConfigurationPropertiesScan({"base.package1", "base.package2"})` 으로 여러 패키지를 스캔하여 등록할 수도 있다.   
 프로퍼티가 제대로 바인딩 됬는지 테스를 위해 `ApplicationRunner`를 작성 후 콘솔로그를 찍어본다.
+
 ```java
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -111,6 +114,7 @@ subTesters=[SubTester{name='sub-tester1', cnt=11, isMainTester=false},
 ## @ConfigurationProperties Validation
 프로퍼티값을 바인딩 할 때 검증을 추가할 수도 있다.  
 스프링의 `@Validated` 와 JSR-303에 정의된 `javax.validation` 애노테이션을 사용하면 되며 간단한 예시만 남겨본다.
+
 ```java
 @ConfigurationProperties(prefix = "test")
 @Validated // 검증대상임을 표시
@@ -120,7 +124,7 @@ public class TesterProperties {
     @Max(90)
     private int cnt;
     private boolean isMainTester;
-        @Valid // 내부 프로퍼티에 검증이 적용되려면 @Valid를 마킹한다.
+    @Valid // 내부 프로퍼티에 검증이 적용되려면 @Valid를 마킹한다.
     private List<SubTester> subTesters = new ArrayList<>();
 
         static class SubTester {
