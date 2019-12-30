@@ -25,7 +25,7 @@ class MyBean {
 프로퍼티 설정파일을 작성한다.  
 일반적으로 프로퍼티명은 `is-main-tester` 처럼 소문자와 대쉬(-)를 구분자로 하는 명칭이 권장된다.  
 프로퍼티명 앞의 대쉬(-)는 리스트형을 나타낼때 사용한다.
-```yaml
+```text
 test:
   name: tester
   cnt: 99
