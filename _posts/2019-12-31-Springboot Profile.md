@@ -87,8 +87,8 @@ includeonly:
 ```
 
 - `profile-common.name`는 모든 프로퍼티 파일이 공통으로 가진 프로퍼티이고, 각 파일마다 개별로 가지고있는 프로퍼티도 있다.
-- test 프로파일을 활성화하고 어플리케이션을 기동하면 공통속성인 `profile-common.name`은 프로파일 프로퍼티 파일(`application-test.yml`)이 나머지를 오버라이드하여 testnameCommon이 값이 된다.
-- `application-test.yml` 뿐만 아니라 디폴트 프로파일 파일인 `application.yml` 또한 읽어드리므로 `defaultonly.name`은 defaultname이 값이 된다.
+- `test` 프로파일을 활성화하고 어플리케이션을 기동하면 공통속성인 `profile-common.name`은 프로파일 프로퍼티 파일(`application-test.yml`)이 나머지를 오버라이드하여 testnameCommon이 값이 된다.
+- `application-test.yml` 뿐만 아니라 디폴트 프로파일 파일인 `application.yml` 또한 읽으므로 `defaultonly.name`은 defaultname이 값이 된다.
 - `spring.profiles.include` 프로퍼티는 포함할 다른 프로파일을 지정할 수 있다. `application-test.yml`파일에서 include 프로파일을 포함했으므로 `application-include.yml` 파일도 읽는다.
 - 활성화 되지 않은 `application-dev.yml` 파일의 프로퍼티들은 읽지 않는다.
 
