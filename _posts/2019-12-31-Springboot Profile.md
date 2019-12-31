@@ -15,6 +15,7 @@ tags: [Java, Spring, SpringBoot, Profile, application.properties, application.ym
 public class TestBean {
 }
 ```
+
 ```java
 @Component
 public class Sample implements ApplicationRunner {
