@@ -14,7 +14,8 @@ tags: [Java, Spring, SpringBoot, Profile, application.properties, application.ym
 @Profile("test") // 이 클래스는 [test]프로파일에서만 빈으로 등록된다.
 public class TestBean {
 }
-
+```
+```java
 @Component
 public class Sample implements ApplicationRunner {
     @Autowired(required = false)
