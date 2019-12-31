@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SpringApplication
+title: SpringBoot SpringApplication
 tags: [Java, Spring, SpringBoot, SpringApplication, FailureAnalyzers, EventListener, WebApplicationType, ApplicationRunner, CommandLineRunner]
 ---
 ## SpringApplication
