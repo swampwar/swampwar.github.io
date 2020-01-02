@@ -206,3 +206,10 @@ SpringApplication이 시작한 시점에 특정 코드를 실행하고자 한다
     argument : --key2=value2
     ======================================================
     ```
+    
+---
+
+요약하면  
+- 스프링부트 어플리케이션의 main 메서드는 SpringApplication 클래스에게 실행을 위임한다.
+- SpringApplication을 통해서 스프링부트의 초기설정을 변경할 수 있다.(FailureAnalyzers, WebApplicationType, EventListener 등)
+- 어플리케이션 기동시 부여한 어플리케이션 옵션을 확인하고 싶다면 ApplicationRunner, CommandLineRunner, ApplicationArguments 중 선택하여 사용한다.
