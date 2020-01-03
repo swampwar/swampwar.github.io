@@ -52,7 +52,7 @@ public class SampleTest {
     - `WebEnvironment.DEFINED_PORT` : 정의된 포트로 내장톰캣이 구동된다.
     - `WebEnvironment.NONE` : `WebApplicationType.NONE`으로 구동된다.
 - 테스트를 위한 `TestRestTemplate` 빈과 `WebTestClient` 빈을 등록할 수 있다.  
-  만일 `WebEnvironment.MOCK` 이라면 `TestRestTemplate`과 `WebTestClient`빈은 등록되지 않는다. 실제 내장톰캣이 구동되지 않으므로 사용할 여지가 없고 `MockMvc`로 테스트하면 되기 때문이다.
+  만일 `WebEnvironment.MOCK` 이라면 `TestRestTemplate`과 `WebTestClient`빈은 등록되지 않는다. 실제 내장톰캣이 구동되지 않으므로 사용할 여지가 없고 어플리케이션에 요청을 보내고 싶다면 `MockMvc`로 테스트하면 되기 때문이다.
 
 > `WebEnvironment` 설정에서 디폴트값이 MOCK 이므로 내장톰캣이 구동되지 않고 테스트가 수행되는 것이 아님에 유의한다.
 
