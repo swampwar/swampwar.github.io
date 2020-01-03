@@ -57,8 +57,8 @@ public class SampleTest {
 > `WebEnvironment` 설정에서 디폴트값이 MOCK 이므로 내장톰캣이 구동되지 않고 테스트가 수행되는 것이 아님에 유의한다.
 
 ### @AutoConfigureMockMvc
-디폴트 설정이 서버가 실행되지 않고 Mock 환경에서 진행되므로 컨트롤러처럼 엔드포인트가 있는 테스트틑 진행할 때는 `MockMvc`를 활용한다.  
-`MockMvc`가 가상의 클라이언트로 어플리케이션에 요청을 날리는 역할을 한다. `MockMvc`를 생성하는 방법에는 여러가지 있지만 테스트클래스에 `@AutoConfigureMockMvc`을 마킹하고 주입받는 것이 간단하다.
+디폴트 설정이 서버가 실행되지 않고 Mock 환경에서 진행되므로 컨트롤러처럼 엔드포인트가 있는 테스트를 진행할 때는 `MockMvc`를 활용한다.  
+`MockMvc`는 가상의 클라이언트로 어플리케이션에 요청을 날리는 역할을 한다. `MockMvc`를 생성하는 방법에는 여러가지 있지만 테스트클래스에 `@AutoConfigureMockMvc`을 마킹하고 주입받는 것이 간단하다.
 
 `MockMvc` 를 사용하여 mock 환경에서 컨트롤러를 테스트하는 코드이다.
 ```java
