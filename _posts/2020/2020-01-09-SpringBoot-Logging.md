@@ -25,7 +25,7 @@ spring-boot-starter-logging에 로그관련 라이브러리들이 추가되는 �
     - 프로퍼티 설정파일(`application.properties`)에 `debug=true`을 추가한다.
 - 어플리케이션의 출력로그 레벨을 조정
     - `logging.level`을 prefix로 하는 프로퍼티를 추가한다.
-    - `logging.level.<logger-name>=<level>`
+    - `logging.level.<logger-name>=<level>`  
       `logging.level.com.yang.wind.mapper=TRACE` : mapper 패키지 이하의 로그레벨을 TRACE로 한다.  
       `logging.level.root=INFO` : root 이하 모든 패키지의 로그레벨을 INFO로 한다.
 
