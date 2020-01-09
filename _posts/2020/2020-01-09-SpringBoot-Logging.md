@@ -26,8 +26,8 @@ spring-boot-starter-logging에 로그관련 라이브러리들이 추가되는 �
 - 어플리케이션의 출력로그 레벨을 조정
     - `logging.level`을 prefix로 하는 프로퍼티를 추가한다.
     - logging.level.<logger-name>=<level>
-    `logging.level.com.yang.wind.mapper=TRACE` : mapper 패키지 이하의 로그레벨을 TRACE로 한다.
-    `logging.level.root=INFO` : root 이하 모든 패키지의 로그레벨을 INFO로 한다.
+      `logging.level.com.yang.wind.mapper=TRACE` : mapper 패키지 이하의 로그레벨을 TRACE로 한다.  
+      `logging.level.root=INFO` : root 이하 모든 패키지의 로그레벨을 INFO로 한다.
 
 ### Log Color
 만약 ANSI를 지원하는 터미널을 사용한다면 프로퍼티 설정파일에 `spring.output.ansi.enabled=detect` 또는 `always` 옵션을 줘서 로그를 컬러풀하게 출력할 수 있다.
