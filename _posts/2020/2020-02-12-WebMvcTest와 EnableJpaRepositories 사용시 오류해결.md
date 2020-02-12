@@ -11,7 +11,7 @@ tags: [Java, Spring, SpringBoot, WebMvcTest, EnableJpaRepositories]
 `org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'entityManagerFactory' available`
 
 ## 원인
-`@WebMvcTest`로 WebMvc와 관련된 빈만 등록된 상태에서 메인클래스에 마킹한 `@EnableJpaRepositories`이 JPA와 관련된 빈을 찾아 작업을 하려할 떄 오류가 발생하였다.
+`@WebMvcTest`로 WebMvc와 관련된 빈만 등록된 상태에서 메인클래스에 마킹한 `@EnableJpaRepositories`이 JPA와 관련된 빈을 찾아 작업을 하려할 때 오류가 발생하였다.
 
 ## 해결
 QueryLookupStrategy 설정을 위해 메인클래스에  @EnableJpaRepositories를 마킹했으나, 굳이 필요한 설정은 아니므로 지우고 테스트를 실행하였다.  
@@ -34,4 +34,4 @@ public class App {
 > By using @EnableJpaRepositories you are explicitly telling Spring Boot's auto-configuration to back off and that you'll handle Spring Data yourself.  
   I think what's happening is that @WebMvcTest is turning off JPA (i.e. not finding your @Entity classes) but @EnableJpaRepositories is still active so it complains that it can't find any JPA models.
 
-https://github.com/spring-projects/spring-boot/issues/6844
+[참고 링크](https://github.com/spring-projects/spring-boot/issues/6844)
