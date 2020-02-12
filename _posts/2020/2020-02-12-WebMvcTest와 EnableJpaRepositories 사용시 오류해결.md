@@ -31,7 +31,6 @@ public class App {
 ```
 
 ## 참고
-> By using @EnableJpaRepositories you are explicitly telling Spring Boot's auto-configuration to back off and that you'll handle Spring Data yourself.  
-  I think what's happening is that @WebMvcTest is turning off JPA (i.e. not finding your @Entity classes) but @EnableJpaRepositories is still active so it complains that it can't find any JPA models.
-
-[참고 링크](https://github.com/spring-projects/spring-boot/issues/6844)
+- [참고 링크](https://github.com/spring-projects/spring-boot/issues/6844)
+  > By using @EnableJpaRepositories you are explicitly telling Spring Boot's auto-configuration to back off and that you'll handle Spring Data yourself.  
+    I think what's happening is that @WebMvcTest is turning off JPA (i.e. not finding your @Entity classes) but @EnableJpaRepositories is still active so it complains that it can't find any JPA models.
