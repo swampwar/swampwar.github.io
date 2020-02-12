@@ -14,8 +14,7 @@ tags: [Java, Spring, SpringBoot, WebMvcTest, EnableJpaRepositories]
 `@WebMvcTest`로 WebMvc와 관련된 빈만 등록된 상태에서 메인클래스에 마킹한 `@EnableJpaRepositories`이 JPA와 관련된 빈을 찾아 작업을 하려할 때 오류가 발생하였다.
 
 ## 해결
-QueryLookupStrategy 설정을 위해 메인클래스에  @EnableJpaRepositories를 마킹했으나, 굳이 필요한 설정은 아니므로 지우고 테스트를 실행하였다.  
-(그저 학습의 이유로 디폴트 전략을 명시적으로 설정하였다.)  
+QueryLookupStrategy 설정을 위해 메인클래스에 `@EnableJpaRepositories`를 마킹했으나, 굳이 필요한 설정은 아니므로 지우고 테스트를 실행하였다.(그저 학습의 이유로 디폴트 전략을 명시적으로 설정하였다.)  
 만일 필요한 옵션이라면  @EnableJpaRepositories를 통해서 하지않고 다른 방법으로 옵션을 줬어야 했을것이다.
 
 ```java
