@@ -28,10 +28,10 @@ public void resume(TriggerKey triggerkey) throws SchedulerException {
 문제는 pause 후 몇 초가 지나고 resume을 해보면 이미 Trigger에 세팅된 시작시점이 지난 Trigger가 resume과 함께 시작해버린다. (실행 되어야 하나 실행하지 못하는 것은 misfire라 하며, Trigger에 misfire 정책을 MISFIRE_INSTRUCTION_DO_NOTHING 으로 했음에도 발생)  
 
 예를들어 매분 10초마다 실행되는 Trigger-Job이 있다고 하면,
-- 0초에 해당 배치를 paues → 10초에 pause 상태이므로 실행 안됨 → 20초에 resume → 다음 분 10초에 실행
+- 0초에 해당 배치를 pause → 10초에 pause 상태이므로 실행 안됨 → 20초에 resume → 다음 분 10초에 실행
 
 이런 동작을 기대했지만 실제로는 아래와 같이 되어버린다.
-- 0초에 해당 배치를 paues → 10초에 pause 상태이므로 실행 안됨 → 20초에 resume과 함께 10초에 실행되어야 할 Trigger-Job이 실행 → 다음 분 10초에 실행
+- 0초에 해당 배치를 pause → 10초에 pause 상태이므로 실행 안됨 → 20초에 resume과 함께 10초에 실행되어야 할 Trigger-Job이 실행 → 다음 분 10초에 실행
 
 ## 해결
 Quartz에서는 `misfireThreshold` 값이 존재하고 디폴트가 60초로 세팅된다.  
