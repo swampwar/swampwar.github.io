@@ -36,7 +36,7 @@ public void resume(TriggerKey triggerkey) throws SchedulerException {
 ## 해결
 Quartz에서는 `misfireThreshold` 값이 존재하고 디폴트가 60초로 세팅된다.  
 Trigger가 재개될 때는 두 가지 스탭으로 실행여부를 결정하는 것 같다.
-1. nextFireTime(다음 실행시간)이 (현재시간 - `misfireThreshold`) 보다 크면 실행한다.
+1. nextFireTime(다음 실행시간)이 (현재시간 - `misfireThreshold`) 크면 실행한다. 작다면 2번에 따른다.
 2. Trigger에 설정된 misfire 정책에 따라 실행한다.(MISFIRE_INSTRUCTION_DO_NOTHING이면 실행 안함)
 
 즉, 나는 `misfireThreshold`가 60초 디폴트 설정 된 상태에서 60초가 지나기 전에 pause를 풀었으므로 misfire정책에 상관없이 즉시 실행이 되었던 것이다.
