@@ -113,8 +113,8 @@ JSON parse error: Cannot deserialize value of type `java.time.LocalDateTime` fro
 **RequestBody로 Json을 바인딩 받을때는 @JsonFormat을 사용한다!**
 
 ## RequestParam
-- `yyyy-MM-ddTHH:mm:ss` 패턴에 아무런 설정이 없으면 String을 LocalDateTime으로 변경할 수 없다는 메시지로 실패한다.
-- Json과 관련이 없기 때문에 @JsonFormat을 지정해도 같은 오류로 실패한다.
+- `yyyy-MM-ddTHH:mm:ss` 패턴에 아무런 VO설정이 없으면 String을 LocalDateTime으로 변경할 수 없다는 메시지로 실패한다.(RequestBody는 아무런 설정없이 동작했다.)
+- Json과 관련이 없기 때문에 @JsonFormat을 지정해도 위 케이스와 같은 오류로 실패한다.
 
 ```java
 // VO
@@ -244,7 +244,7 @@ TestVo(ldt=2020-03-18T18:25:40, name=yangs)
 
 ## ResponseBody
 - Jackson이 JSON으로 VO를 직렬화 해야하므로 @JsonFormat 설정을 따라간다.
-- 만일 VO에 아무 애너테이션도 없다면 `yyyy-MM-ddTHH:mm:ss` 패턴의 스트링 값으로 직렬화되며, @DateTimeFormat 설정이 있어도 무시하고 `yyyy-MM-ddTHH:mm:ss` 패턴으로 직렬화한다. 둘 다 설정된 경우는 당연히 @JsonFormat을 따라간다.
+- 만일 VO에 아무런 애너테이션도 없다면 `yyyy-MM-ddTHH:mm:ss` 패턴의 스트링 값으로 직렬화되며, @DateTimeFormat 설정이 있어도 무시하고 `yyyy-MM-ddTHH:mm:ss` 패턴으로 직렬화한다. 둘 다 설정된 경우는 당연히 @JsonFormat을 따라간다.
 
 ```java
 // VO
@@ -287,20 +287,20 @@ MockHttpServletResponse:
 ```
 
 ## 정리
-@RequestBody로 JSON데이터를 LocalDateTime 변수에 바인딩하고 싶다면?  
+**@RequestBody로 JSON데이터를 LocalDateTime 변수에 바인딩하고 싶다면?**
 **설정없이 `yyyy-MM-ddTHH:mm:ss` 로 JSON데이터를 보낸다. 또는 LocalDateTime 변수에 @JsonFormat을 지정한다.**
 - 테스트 데이터의 패턴이 `yyyy-MM-ddTHH:mm:ss` 면서, VO 변수에 설정이 없는경우 : **성공**
 - 테스트 데이터의 패턴이 `yyyy-MM-ddTHH:mm:ss` 이 아니면서, VO 변수에 @JsonFormat 설정인 경우 : **성공**
 - 테스트 데이터의 패턴이 `yyyy-MM-ddTHH:mm:ss` 이 아니면서, VO 변수에 @DateTimeFormat 설정인 경우 : **실패**
 
-@RequestParam, @ModelAttribute, @Pathvariable로 LocalDateTime 변수에 바인딩하고 싶다면?  
+**@RequestParam, @ModelAttribute, @Pathvariable로 LocalDateTime 변수에 바인딩하고 싶다면?**
 **LocalDateTime 변수에 @DateTimeFormat을 지정한다.**
 - 테스트 데이터의 패턴이 `yyyy-MM-ddTHH:mm:ss` 면서, VO 변수에 설정이 없는경우 : **실패**
 - 테스트 데이터의 패턴이 `yyyy-MM-ddTHH:mm:ss` 이 아니면서, VO 변수에 @JsonFormat 설정인 경우 : **실패**
 - 테스트 데이터의 패턴이 `yyyy-MM-ddTHH:mm:ss` 면서, VO 변수에 @DateTimeFormat 설정인 경우 : **실패**
 - 테스트 데이터의 패턴이 `yyyy-MM-dd HH:mm:ss` `yyyy/MM/dd HH-mm-ss` `yyyyMMddHHmmss` `dd-MM-yyyy HH:mm:ss` 면서, VO 변수에  @DateTimeFormat 설정인 경우 : **성공**
 
-@ResponseBody로 VO의 LocalDateTime 변수를 JSON 데이터로 보내고 싶다면?  
+**@ResponseBody로 VO의 LocalDateTime 변수를 JSON 데이터로 보내고 싶다면?**
 **설정없이 `yyyy-MM-ddTHH:mm:ss` 으로 데이터를 보낸다. 또는 LocalDateTime 변수에 @JsonFormat을 지정한다.**
 - VO에 아무런 설정이 없는경우 : `yyyy-MM-ddTHH:mm:ss` 패턴의 스트링 반환
 - VO의 LocalDateTime 변수에 @DateTimeFormat 설정인 경우 : 설정이 무시되며 `yyyy-MM-ddTHH:mm:ss` 패턴의 스트링 반환
