@@ -144,7 +144,8 @@ public void POST_리퀘스트파람_기본패턴() throws Exception {
 Failed to convert from type [java.lang.String] to type [java.time.LocalDateTime] for value '2020-03-18T18:25:40';
 ```
 
-- `yyyy-MM-ddTHH:mm:ss` 패턴이 JSON변환시에는 자동으로 되어서 @DateTimeFormat에도 될것이라 예상했으나 T 문자열 때문에 오류난다.
+- `yyyy-MM-ddTHH:mm:ss` 패턴이 JSON변환 - `yyyy-MM-ddTHH:mm:ss` 패턴이 JSON변환시에는 자동으로 되어서 @DateTimeFormat에도 될것이라 예상했으나 T 문자열 때문에 오류난다.
+시에는 자동으로 되어서 @DateTimeFormat에도 될것이라 예상했으나 T 문자열 때문에 오류난다.
 
 ```java
 // VO
