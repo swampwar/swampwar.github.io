@@ -65,4 +65,4 @@ DispatcherServlet은 디폴트로 여러개의 ViewResolver를 가지고있다. 
 
 ### 참고
 
-[https://javarevisited.blogspot.com/2017/08/what-does-internalresourceviewresolver-do-in-spring-mvc.html](What is the Role of InternalResourceViewResolver in Spring MVC? Interview Question)
+[What is the Role of InternalResourceViewResolver in Spring MVC? Interview Question](https://javarevisited.blogspot.com/2017/08/what-does-internalresourceviewresolver-do-in-spring-mvc.html)
