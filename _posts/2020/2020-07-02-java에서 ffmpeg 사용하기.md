@@ -23,6 +23,20 @@ tags: [java, ffmpeg, 썸네일]
 
 ```java
 
+import lombok.extern.slf4j.Slf4j;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
+import net.bramp.ffmpeg.probe.FFmpegProbeResult;
+import org.modelmapper.internal.util.Assert;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import wind.yang.yangsArchive.video.VideoInfo;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+
 @Slf4j
 @Component
 public class VideoFileUtils {
