@@ -51,17 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 세션에 저장되지 않으므로 요청이 처리되고나면 사라진다.
 
 ```java
-public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
+public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    if (SecurityContextHolder.getContext().getAuthentication() == null) {
+        SecurityContextHolder.getContext().setAuthentication(
+                createAuthentication((HttpServletRequest) req));
+    }
+    else {
 
-		if (SecurityContextHolder.getContext().getAuthentication() == null) {
-			SecurityContextHolder.getContext().setAuthentication(
-					createAuthentication((HttpServletRequest) req));
-		}
-		else {
-    
-		}
+    }
 
-		chain.doFilter(req, res);
-	}
+    chain.doFilter(req, res);
+}
 ```
