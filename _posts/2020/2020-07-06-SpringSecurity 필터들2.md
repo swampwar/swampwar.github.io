@@ -1,7 +1,7 @@
 ---
 layout: post
-title: UsernamePasswordAuthenticationFilter, RememberMeAuthenticationFilter, AnonymousAuthenticationFilter
-tags: [spring, security, UsernamePasswordAuthenticationFilter, RememberMeAuthenticationFilter, AnonymousAuthenticationFilter]
+title: SecurityContextHolder, SecurityContextPersistenceFilter
+tags: [spring, security, Session, SecurityContextHolder, SecurityContextPersistenceFilter]
 ---
 
 스프링 시큐리티를 공부하며 주요 필터에 대해 정리해본다.
