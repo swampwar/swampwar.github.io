@@ -52,9 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 ```java
 public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-    if (SecurityContextHolder.getContext().getAuthentication() == null) {
-        SecurityContextHolder.getContext().setAuthentication(
-                createAuthentication((HttpServletRequest) req));
+    if (SecurityContextHolder.getContext().getAuthentication() == null) { // 이전에 생성된 Authentication 객체가 없으면
+        SecurityContextHolder.getContext().setAuthentication(createAuthentication((HttpServletRequest) req)); // AnonymousAuthenticationToken을 생성
     }
     else {
 
