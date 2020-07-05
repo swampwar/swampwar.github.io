@@ -38,15 +38,15 @@ package org.springframework.security.web;
 public class FilterChainProxy extends GenericFilterBean {
     private List<SecurityFilterChain> filterChains; // SecurityFilterChain를 리스트로 가지고 있다.
 
-	private List<Filter> getFilters(HttpServletRequest request) {
-	    for (SecurityFilterChain chain : filterChains) {
-		    if (chain.matches(request)) { // 설정된 URL과 매칭되는지 검사
-			    return chain.getFilters(); // 매칭된 SecurityFilterChain의 필터들이 동작한다.
-			}
-		}
-	
+    private List<Filter> getFilters(HttpServletRequest request) {
+        for (SecurityFilterChain chain : filterChains) {
+            if (chain.matches(request)) { // 설정된 URL과 매칭되는지 검사
+                return chain.getFilters(); // 매칭된 SecurityFilterChain의 필터들이 동작한다.
+            }
+        }
+    
         return null;
-	}
+    }
 }
 ```
 
