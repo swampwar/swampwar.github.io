@@ -29,3 +29,57 @@ public void doFilter(ServletRequest request, ServletResponse response, FilterCha
 ```
 
 `DelegatingFilterProxy`에 의해 위임되어 실행되는 `FilterChainProxy`는 `SecurityFilterChain` 리스트를 프로퍼티로 가지고 있다. SecurityFilterChain는 다시 여러개의 Security Filter가 엮인 형태로 실제 보안과 관련된 활동이 수행되는 클래스들이다. 만일 Security Filter에 대한 동작이 궁금하다면 디버그의 시작점으로 FilterChainProxy를 활용하자.
+
+보안 설정에 따라서 FilterChainProxy는 SecurityFilterChain을 리스트로 들고있다. 복수의 SecurityFilterChain이 등록됬다면 설정된 우선순위에 따라서 URL과 매칭되는지 검사하고(SecurityFilterChain은 RequestMatcher 타입의 클래스변수를 두고 있는데 이놈이 검사한다.) 매칭된 SecurityFilterChain의 필터들이 동작한다. 
+
+```java
+package org.springframework.security.web;
+
+public class FilterChainProxy extends GenericFilterBean {
+	  private List<SecurityFilterChain> filterChains; // SecurityFilterChain를 리스트로 가지고 있다.
+
+		private List<Filter> getFilters(HttpServletRequest request) {
+			for (SecurityFilterChain chain : filterChains) {
+				if (chain.matches(request)) { // 설정된 URL과 매칭되는지 검사
+					return chain.getFilters(); // 매칭된 SecurityFilterChain의 필터들이 동작한다.
+				}
+			}
+	
+			return null;
+		}
+}
+```
+
+아래는 각 설정클래스의 설정이 다르므로 각기 다른 필터들을 가진 `SecurityFilterChain`이 2개 생성된다.
+
+1. `/admin`으로 시작하는 요청이 오면 `@Order` 속성이 0번인 `WebSecurityStudyConfig`의 설정된 필터들이 동작한다.
+2. `/admin`으로 시작하지 않는 요청이 오면 `WebSecurityStudyConfig`과 매칭되지 않으므로 다음 순서인 `WebSecurityStudyConfig2`과 매칭되는지 검사한다. WebSecurityStudyConfig2은 모든 URL에 대해 접근을 허용하므로 통과된다.
+
+```java
+@EnableWebSecurity
+@Order(0)
+public class WebSecurityStudyConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .antMatcher("/admin/**") // '/admin' 으로 시작하는 URL에서만 동작
+                .authorizeRequests()
+                .anyRequest().authenticated() // '/admin' 으로 시작하는 모든 요청에 대해 인증필요
+        .and()
+            .httpBasic(); // httpBasic 인증사용
+    }
+}
+
+@Configuration
+@Order(1)
+class WebSecurityStudyConfig2 extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests() // 모든 URL에서 동작
+                .anyRequest().permitAll() // 모든 URL에서 접근허용
+        .and()
+            .formLogin(); // formLogin 인증사용
+    }
+}
+```
