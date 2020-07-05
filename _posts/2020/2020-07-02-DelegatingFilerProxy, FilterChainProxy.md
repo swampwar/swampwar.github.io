@@ -30,23 +30,23 @@ public void doFilter(ServletRequest request, ServletResponse response, FilterCha
 
 `DelegatingFilterProxy`에 의해 위임되어 실행되는 `FilterChainProxy`는 `SecurityFilterChain` 리스트를 프로퍼티로 가지고 있다. SecurityFilterChain는 다시 여러개의 Security Filter가 엮인 형태로 실제 보안과 관련된 활동이 수행되는 클래스들이다. 만일 Security Filter에 대한 동작이 궁금하다면 디버그의 시작점으로 FilterChainProxy를 활용하자.
 
-보안 설정에 따라서 FilterChainProxy는 SecurityFilterChain을 리스트로 들고있다. 복수의 SecurityFilterChain이 등록됬다면 설정된 우선순위에 따라서 URL과 매칭되는지 검사하고(SecurityFilterChain은 RequestMatcher 타입의 클래스변수를 두고 있는데 이놈이 검사한다.) 매칭된 SecurityFilterChain의 필터들이 동작한다. 
+복수의 `SecurityFilterChain`이 등록됬다면 설정된 우선순위에 따라서 URL과 매칭되는지 검사하고(`SecurityFilterChain`은 RequestMatcher 타입의 클래스변수를 두고 있는데 이놈이 검사한다.) 매칭된 `SecurityFilterChain`의 필터들이 동작한다. 
 
 ```java
 package org.springframework.security.web;
 
 public class FilterChainProxy extends GenericFilterBean {
-	  private List<SecurityFilterChain> filterChains; // SecurityFilterChain를 리스트로 가지고 있다.
+    private List<SecurityFilterChain> filterChains; // SecurityFilterChain를 리스트로 가지고 있다.
 
-		private List<Filter> getFilters(HttpServletRequest request) {
-			for (SecurityFilterChain chain : filterChains) {
-				if (chain.matches(request)) { // 설정된 URL과 매칭되는지 검사
-					return chain.getFilters(); // 매칭된 SecurityFilterChain의 필터들이 동작한다.
-				}
+	private List<Filter> getFilters(HttpServletRequest request) {
+	    for (SecurityFilterChain chain : filterChains) {
+		    if (chain.matches(request)) { // 설정된 URL과 매칭되는지 검사
+			    return chain.getFilters(); // 매칭된 SecurityFilterChain의 필터들이 동작한다.
 			}
-	
-			return null;
 		}
+	
+        return null;
+	}
 }
 ```
 
