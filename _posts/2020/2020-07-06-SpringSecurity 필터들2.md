@@ -33,6 +33,7 @@ SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHRE
 ## SecurityContextPersistenceFilter
 
 ![SecurityFilterChain]({{ "/assets/img/202007/SecurityFilterChain.png" | relative_url }})
+
 이미지 출처 : [http://atin.tistory.com/590](http://atin.tistory.com/590)
 
 위 필터체인의 최상단부에 위치하고 있는 필터이다. 요청 처리과정에서 `SecurityContext`을 생성하여 `SecurityContextHolder`에 저장하거나 저장소(디폴트는 세션)에 저장된 `SecurityContext`가 있다면 로드하여 `SecurityContextHolder`에 저장하는 역할을 한다.
