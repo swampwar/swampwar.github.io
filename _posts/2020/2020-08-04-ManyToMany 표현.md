@@ -55,7 +55,7 @@ class Course {
 학생이 강좌를 평가하는 것을 모델링한다면 RDBMS 에서는 다음같이 표현한다. 여기서 rating 프로퍼티를 위 코드처럼 엔티티를 직접 연결해서는 표현할 수 없다.  
 그러므로 관계테이블(course_rating)을 엔티티로 승격시켜 코드로 작성하고 여기에 rating 프로퍼티를 추가한다. Key가 2개 이상이므로 가독성을 위해 복합키(Composite Key)로 작성해본다.
 
-![manytomany02]({{ "/assets/img/202008/manytomany01.png" | relative_url }})
+![manytomany02]({{ "/assets/img/202008/manytomany02.png" | relative_url }})
 
 ```java
 @Embeddable
@@ -129,7 +129,7 @@ class Course {
 
 학생이 강좌를 수강하고 성적을 받는 것을 생각해본다. 학생은 같은 강좌를 여러번 수강할 수 있고 이에따라 성적도 복수개가 저장되어야 한다. 위 예제처럼 FK의 조합으로는 여러번 수강하는 것에대한 표현이 불가능하니 별도의 ID를 두고 관계를 표현한다.
 
-![manytomany03]({{ "/assets/img/202008/manytomany01.png" | relative_url }})
+![manytomany03]({{ "/assets/img/202008/manytomany03.png" | relative_url }})
 
 ```java
 @Entity
